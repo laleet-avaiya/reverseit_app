@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+
+import Login from './src/screens/Login';
+import Signup from './src/screens/Signup';
+import Home from './src/screens/Home';
+import Profile from './src/screens/Profile';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import { connect } from 'react-redux';
 import postReducer from './src/reducers/postReducer';
 import { deletePost } from './src/actions/food';
-import WelcomeScreen from './src/WelcomeScreen/WelcomeScreen';
+
+
+const Stack = createStackNavigator();
 
 class App extends Component {
   render() {
     return (
-      <View style={{height: "100%"}}>
-        <Text style={{textAlign:'center'}}>{this.props.title}</Text>
-        <WelcomeScreen />
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Welcome">
+          <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome' }} />
+          <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
+          <Stack.Screen name="Signup" component={Signup} options={{ title: 'Signup' }} />
+          <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+        </Stack.Navigator>
+      </NavigationContainer>
     );
   }
 }
