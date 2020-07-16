@@ -14,7 +14,7 @@ const Tab = createMaterialTopTabNavigator();
 class AuthTab extends Component {
     render() {
         return (
-            <Tab.Navigator>
+            <Tab.Navigator backBehavior='none'>
                 <Tab.Screen name="login" component={Login} />
                 <Tab.Screen name="signup" component={Signup} />
             </Tab.Navigator>

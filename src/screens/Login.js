@@ -77,7 +77,7 @@ class Login extends Component {
 
           <Button
             onPress={() => this.props.login({ email: email, password: password })}
-            buttonStyle={{backgroundColor: themeColor}}
+            buttonStyle={{ backgroundColor: themeColor }}
             containerStyle={styles.button}
             titleStyle={styles.buttonText}
             // type="clear"
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     title: state.postReducer.title,
-    themeColor : state.userReducer.themeColor,
+    themeColor: state.userReducer.themeColor,
   }
 }
 
