@@ -25,7 +25,7 @@ class App extends Component {
 
           {userLogedIn ? (
             <>
-              <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Profile', headerShown: false }} />
+              <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Welcome', headerShown: true }} />
             </>
           ) : (
               <>
