@@ -4,7 +4,8 @@ const initialState = {
     user: {},
     userLogedIn: false,
     errorMessage: null,
-    wait: true
+    wait: true,
+    themeColor: '#23b4fc'
 }
 
 const userReducer = (state = initialState, action) => {

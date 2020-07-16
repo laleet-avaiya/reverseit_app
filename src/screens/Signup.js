@@ -37,7 +37,7 @@ class Signup extends Component {
   }
 
   render() {
-    let { title } = this.props;
+    let { title,themeColor } = this.props;
     let { emailError, email, password, passwordError, HelperText, secure, icon } = this.state;
     return (
       <View style={{ flex: 1 }}>
@@ -75,6 +75,7 @@ class Signup extends Component {
 
           <Button
             onPress={() => this.props.signup({ email: email, password: password })}
+            buttonStyle={{backgroundColor:themeColor}}
             containerStyle={styles.button}
             titleStyle={styles.buttonText}
             // type="clear"
@@ -182,6 +183,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     title: state.postReducer.title,
+    themeColor : state.userReducer.themeColor,
   }
 }
 

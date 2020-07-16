@@ -37,7 +37,7 @@ class Login extends Component {
   }
 
   render() {
-    let { title } = this.props;
+    let { title, themeColor } = this.props;
     let { emailError, email, password, passwordError, HelperText, secure, icon } = this.state;
     return (
       <View style={{ flex: 1 }}>
@@ -77,6 +77,7 @@ class Login extends Component {
 
           <Button
             onPress={() => this.props.login({ email: email, password: password })}
+            buttonStyle={{backgroundColor: themeColor}}
             containerStyle={styles.button}
             titleStyle={styles.buttonText}
             // type="clear"
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: '10%',
     fontSize: 16,
-    color: "#08c",
+    color: '#23b4fc',
     fontWeight: 'bold'
 
   },
@@ -186,6 +187,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     title: state.postReducer.title,
+    themeColor : state.userReducer.themeColor,
   }
 }
 
