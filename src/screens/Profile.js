@@ -8,10 +8,11 @@ import { logoutUser } from '../actions/user';
 
 class Profile extends Component {
     render() {
+        let { email } = this.props;
         return (
             <View>
                 <Text style={{ textAlign: 'center' }}>
-                    Welcome to Profile Page
+                    Welcome to Profile Page {email}
                 </Text>
                 <Button
                     onPress={() => this.props.logout()}
@@ -53,7 +54,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn
+        userLogedIn: state.userReducer.userLogedIn,
+        email: state.userReducer.user.email,
     }
 }
 

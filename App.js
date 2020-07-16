@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 
-import Login from './src/screens/Login';
-import Signup from './src/screens/Signup';
+import AuthTab from './src/screens/AuthTab';
 import Home from './src/screens/Home';
 import BottomNavigator from './src/screens/BottomNavigator';
 
@@ -17,21 +16,22 @@ const Stack = createStackNavigator();
 
 class App extends Component {
   render() {
-    let { userLogedIn, title } = this.props;
+    let { userLogedIn, title, wait } = this.props;
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          { userLogedIn ? (
-          <>
-            <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Profile', headerShown: false }} />
-          </>
-          ) : (
+
+          {wait && <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome', headerShown: false }} />}
+
+          {userLogedIn ? (
             <>
-            <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome' }} />
-            <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
-            <Stack.Screen name="Signup" component={Signup} options={{ title: 'Signup' }} />
+              <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Profile', headerShown: false }} />
             </>
-        ) }
+          ) : (
+              <>
+                <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
+              </>
+            )}
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -46,7 +46,8 @@ const mapStateToProps = (state) => {
   return {
     post: state.postReducer.postList,
     title: state.postReducer.title,
-    userLogedIn: state.userReducer.userLogedIn
+    userLogedIn: state.userReducer.userLogedIn,
+    wait: state.userReducer.wait
   }
 }
 

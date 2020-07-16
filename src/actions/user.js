@@ -1,10 +1,10 @@
-import { USER_LOGIN, USER_SIGNUP, USER_LOGOUT, USER_RESET_PASSWORD, USER_UPDATE } from './actionTypes';
+import { USER_LOGIN, USER_SIGNUP, USER_LOGOUT, USER_RESET_PASSWORD, USER_UPDATE, UPDATE_WAIT } from './actionTypes';
 
 
 export const loginUser = (user) => (
     {
         type: USER_LOGIN,
-        data: user
+        user: user
     }
 )
 
@@ -32,6 +32,13 @@ export const updateUser = (user) => (
     {
         type: USER_UPDATE,
         user: user
+    }
+)
+
+export const updateWait = (wait) => (
+    {
+        type: UPDATE_WAIT,
+        wait: wait
     }
 )
 

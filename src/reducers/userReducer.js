@@ -1,19 +1,23 @@
-import { USER_LOGIN, USER_SIGNUP, USER_LOGOUT, USER_RESET_PASSWORD, USER_UPDATE } from '../actions/actionTypes'
+import { USER_LOGIN, USER_SIGNUP, USER_LOGOUT, USER_RESET_PASSWORD, USER_UPDATE, UPDATE_WAIT } from '../actions/actionTypes'
 
 const initialState = {
     user: {},
     userLogedIn: false,
-    errorMessage: null
+    errorMessage: null,
+    wait: true
 }
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOGIN:
+            console.log(action.user);
             return {
                 ...state,
-                userLogedIn: true
+                userLogedIn: true,
+                user: action.user
             };
         case USER_SIGNUP:
+            console.log(action.user);
             return {
                 ...state,
                 user: action.user
@@ -32,6 +36,12 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.user
+            };
+        
+        case UPDATE_WAIT:
+            return {
+                ...state,
+                wait: action.wait
             };
         default:
             return state;
