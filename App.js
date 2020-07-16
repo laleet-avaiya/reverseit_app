@@ -10,21 +10,28 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { connect } from 'react-redux';
-import postReducer from './src/reducers/postReducer';
-import { deletePost } from './src/actions/food';
+import { deletePost } from './src/actions/post';
 
 
 const Stack = createStackNavigator();
 
 class App extends Component {
   render() {
+    let { userLogedIn, title } = this.props;
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
-          <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome' }} />
-          <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
-          <Stack.Screen name="Signup" component={Signup} options={{ title: 'Signup' }} />
-          <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+        <Stack.Navigator>
+          { userLogedIn ? (
+          <>
+            <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+          </>
+          ) : (
+            <>
+            <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome' }} />
+            <Stack.Screen name="Login" component={Login} options={{ title: 'Login' }} />
+            <Stack.Screen name="Signup" component={Signup} options={{ title: 'Signup' }} />
+            </>
+        ) }
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -38,7 +45,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     post: state.postReducer.postList,
-    title: state.postReducer.title
+    title: state.postReducer.title,
+    userLogedIn: state.userReducer.userLogedIn
   }
 }
 

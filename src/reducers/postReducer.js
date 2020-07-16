@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST } from '../actions/types'
+import { ADD_POST, DELETE_POST } from '../actions/actionTypes'
 
 const initialState = {
     postList: [],

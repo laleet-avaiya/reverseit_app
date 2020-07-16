@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 
-import postReducer from '../reducers/postReducer';
-import { deletePost } from '../actions/food';
+import { signupUser } from '../actions/user';
 
 
 class Signup extends Component {
@@ -23,11 +22,15 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    title: state.postReducer.title,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
+  return {
+    signup: (user) => dispatch(signupUser(user)),
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Signup);

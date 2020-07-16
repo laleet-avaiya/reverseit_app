@@ -3,18 +3,15 @@ import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-nat
 import { Button, Image, Text } from 'react-native-elements';
 
 import { connect } from 'react-redux';
-import postReducer from '../reducers/postReducer';
-import { deletePost } from '../actions/food';
-
 
 class Home extends Component {
 
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, title } = this.props;
         return (
             <View style={styles.container}>
-                <Text style={{ textAlign: 'center' }}>{this.props.title}</Text>
+                {/* <Text style={{ textAlign: 'center' }}>{title}</Text> */}
                 <Image
                     source={require('./assets/logo.png')}
                     resizeMode='stretch'
@@ -23,15 +20,15 @@ class Home extends Component {
                 />
                 <Button
                     onPress={() => navigation.navigate('Login')}
-                    containerStyle={styles.facebookButton}
-                    titleStyle={styles.facebookButtonText}
+                    containerStyle={styles.button}
+                    titleStyle={styles.buttonText}
                     type="clear"
                     title="Log In"
                 />
                 <Button
                     onPress={() => navigation.navigate('Signup')}
-                    containerStyle={styles.emailButton}
-                    titleStyle={styles.emailButtonText}
+                    containerStyle={styles.button}
+                    titleStyle={styles.buttonText}
                     type="clear"
                     title="Sign Up"
                 />
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
         marginTop: '10%',
         marginHorizontal: '5%',
     },
-    facebookButton: {
+    button: {
         marginTop: 10,
         marginHorizontal: '15%',
         backgroundColor: 'white',
@@ -57,35 +54,23 @@ const styles = StyleSheet.create({
         borderColor: 'green',
         borderWidth: 1
     },
-    emailButton: {
-        marginTop: 10,
-        marginHorizontal: '15%',
-        backgroundColor: 'white',
-        borderRadius: 15,
-        borderColor: 'green',
-        borderWidth: 1,
-    },
-    facebookButtonText: {
+    buttonText: {
         color: 'green',
         margin: 5,
         fontSize: 14,
         fontWeight: '700'
     },
-    emailButtonText: {
-        color: 'green',
-        margin: 5,
-        fontSize: 14,
-        fontWeight: '700'
-    }
 });
 
 const mapStateToProps = (state) => {
     return {
-        title: state.postReducer.title
+        title: state.postReducer.title,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        // login: (user) => dispatch(loginUser(user)),
+    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

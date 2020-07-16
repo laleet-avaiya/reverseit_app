@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST } from './types';
+import { ADD_POST, DELETE_POST } from './actionTypes';
 
 
 export const addPost = (post) => (
