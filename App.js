@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'rea
 import Login from './src/screens/Login';
 import Signup from './src/screens/Signup';
 import Home from './src/screens/Home';
-import Profile from './src/screens/Profile';
+import BottomNavigator from './src/screens/BottomNavigator';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,7 +23,7 @@ class App extends Component {
         <Stack.Navigator>
           { userLogedIn ? (
           <>
-            <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }} />
+            <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Profile', headerShown: false }} />
           </>
           ) : (
             <>
