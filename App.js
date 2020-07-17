@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 
 import AuthTab from './src/screens/AuthTab';
-import Home from './src/screens/Home';
+import PhoneAuth from './src/screens/PhoneAuth';
 import BottomNavigator from './src/screens/BottomNavigator';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { connect } from 'react-redux';
 import { deletePost } from './src/actions/post';
+import Home from './src/screens/Home';
 
 
 const Stack = createStackNavigator();
@@ -29,7 +30,8 @@ class App extends Component {
             </>
           ) : (
               <>
-                <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
+                {/* <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} /> */}
+                <Stack.Screen name="AuthTab" component={PhoneAuth} options={{ title: 'Welcome', }} />
               </>
             )}
         </Stack.Navigator>
