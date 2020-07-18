@@ -1,25 +1,85 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
+import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput } from 'react-native';
+import { Button, Image, Text, } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 
 import { logoutUser } from '../actions/user';
+import { addPost } from '../actions/post';
 
 class AddPost extends Component {
 
-    componentDidMount = () => {
-        this.props.navigation.setParams({
-            options : { headerShown: false }
-        });
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            description: ''
+        };
     }
 
+    setTitle = (data) => {
+        this.setState({ title: data })
+    }
+
+    setDescription = (data) => {
+        this.setState({ description: data })
+    }
+
+    addPost = () => {
+
+        let post = {
+            id: Math.random(),
+            title: this.state.title,
+            description: this.state.description,
+            postOn: Date().toLocaleString()
+        }
+        this.props.addPost(post)
+    }
+    componentDidMount = () => { }
+
     render() {
+        let { title, description } = this.state;
+        let { themeColor } = this.props;
         return (
-            <View>
-                <Text style={{ textAlign: 'center' }}>
-                    Welcome to AddPost Page
-                </Text>
+            <View style={{ flex: 1 }}>
+                <View style={styles.mainContainer}>
+                    <Text style={[styles.labelStyle]}>Title</Text>
+                    <View style={styles.titleSection}>
+                        <TextInput
+                            style={[styles.titleInputLayout, styles.normalBorder]}
+                            value={title}
+                            label="Title"
+                            autoCapitalize="sentences"
+                            keyboardType="default"
+                            onChangeText={text => this.setTitle(text)} />
+                    </View>
+
+                    <Text style={[styles.labelStyle]}>Description</Text>
+                    <View style={styles.titleSection}>
+                        <TextInput
+                            style={[styles.titleInputLayout, styles.normalBorder]}
+                            value={description}
+                            label="Description"
+                            keyboardType="default"
+                            autoCapitalize="sentences"
+                            multiline
+                            editable
+                            numberOfLines={10}
+                            onChangeText={text => this.setDescription(text)} />
+                    </View>
+
+
+                    <Button
+                        onPress={this.addPost}
+                        buttonStyle={{ backgroundColor: themeColor }}
+                        containerStyle={styles.button}
+                        titleStyle={styles.buttonText}
+                        // type="clear"
+                        title="Post"
+                    />
+
+                </View>
+
             </View>
         );
     }
@@ -28,38 +88,55 @@ class AddPost extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
     },
-    imageContainer: {
-        marginTop: '10%',
-        marginHorizontal: '5%',
+    mainContainer: {
+        flex: 1,
+        backgroundColor: "#ffffff",
     },
     button: {
-        marginTop: 10,
-        marginHorizontal: '15%',
+        marginTop: '20%',
+        marginHorizontal: '5%',
         backgroundColor: 'white',
-        borderRadius: 15,
-        borderColor: 'green',
-        borderWidth: 1
     },
-    buttonText: {
-        color: 'green',
-        margin: 5,
-        fontSize: 14,
-        fontWeight: '700'
+    labelStyle: {
+        marginHorizontal: 16,
+        fontSize: 16,
+        marginTop: 16,
+        fontWeight: 'bold'
+    },
+    titleSection: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+
+        backgroundColor: '#fff',
+        marginTop: 16,
+    },
+    titleInputLayout: {
+        marginHorizontal: 16,
+        flex: 1,
+        color: "#222222",
+        paddingStart: 16,
+        textAlignVertical: "top"
+    },
+    normalBorder: {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "#c4c4c4",
+        borderRadius: 2,
     },
 });
 
 const mapStateToProps = (state) => {
     return {
         title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn
+        userLogedIn: state.userReducer.userLogedIn,
+        themeColor: state.userReducer.themeColor,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logout: () => dispatch(logoutUser())
+        addPost: (post) => dispatch(addPost(post))
     }
 }
 

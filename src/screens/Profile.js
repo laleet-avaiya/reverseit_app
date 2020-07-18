@@ -27,7 +27,7 @@ class Profile extends Component {
                 </View>
                 <HorizontalLine></HorizontalLine>
                 <Text onPress={() => this.props.logout()} style={{ textAlign: 'left', marginLeft: 10,  fontSize: 15, fontWeight: 'bold' }}> Logout </Text>
-                <View style={styles.lineStyle} />
+                <HorizontalLine></HorizontalLine>
             </View>
         );
     }

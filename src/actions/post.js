@@ -4,13 +4,13 @@ import { ADD_POST, DELETE_POST } from './actionTypes';
 export const addPost = (post) => (
     {
         type: ADD_POST,
-        data: post
+        post: post
     }
 )
 
 export const deletePost = (key) => (
     {
         type: DELETE_POST,
-        key: key
+        id: id
     }
 )

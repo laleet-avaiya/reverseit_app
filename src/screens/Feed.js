@@ -35,7 +35,7 @@ class Feed extends Component {
                         return (
                             <Card key={post.id}>
                                 <Text>{post.title}</Text>
-                                <Text>5 min Ago</Text>
+                                <Text>{post.postOn}</Text>
                             </Card>
                         )
 
