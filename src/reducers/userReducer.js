@@ -11,11 +11,11 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOGIN:
-            console.log(action.user.data);
+            console.log(action.user);
             return {
                 ...state,
                 userLogedIn: true,
-                user: action.user.data
+                user: action.user
             };
         case USER_SIGNUP:
             console.log(action.user);

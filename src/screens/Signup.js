@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { signupUser } from '../actions/user';
 
+import Firebase from '../Firebase'
 
 class Signup extends Component {
 
@@ -35,6 +36,14 @@ class Signup extends Component {
       this.setState({ icon: "Show", secure: true })
     }
   }
+
+  handleSignUp = () => {
+    const { email, password } = this.state
+    Firebase.auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => console.log("hi"))
+        .catch(error => console.log(error))
+}
 
   render() {
     let { title,themeColor } = this.props;
@@ -74,7 +83,7 @@ class Signup extends Component {
             type="error">{passwordError}</Text>
 
           <Button
-            onPress={() => this.props.signup({ email: email, password: password })}
+            onPress={this.handleSignUp}
             buttonStyle={{backgroundColor:themeColor}}
             containerStyle={styles.button}
             titleStyle={styles.buttonText}
@@ -189,7 +198,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signup: (user) => dispatch(signupUser(user)),
+    login: (user) => dispatch(loginUser(user)),
   }
 }
 

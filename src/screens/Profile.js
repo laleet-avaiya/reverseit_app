@@ -9,8 +9,8 @@ import { logoutUser } from '../actions/user';
 
 class Profile extends Component {
     render() {
-        let { avatar, email, first_name, last_name } = this.props.user;
-        let {themeColor} = this.props;
+        let { email } = this.props.user;
+        let { themeColor } = this.props;
         return (
             <View>
                 <Header
@@ -21,19 +21,8 @@ class Profile extends Component {
                         backgroundColor: themeColor,
                         justifyContent: 'space-around',
                     }}></Header>
-                <View style={{ flexDirection: 'row' }}>
-                    <Image
-                        source={{ uri: avatar }}
-                        resizeMode='stretch'
-                        style={{ width: 75, height: 75, borderRadius: 50 }}
-                        containerStyle={{ margin: 10 }}
-                    />
-                    <View style={{ margin: 20 }}>
-                        <Text style={{ fontSize: 20 }}>{first_name + " " + last_name}</Text>
-                        <Text style={{ fontSize: 20 }}>{email}</Text>
-                    </View>
 
-                </View>
+                <Text style={{ fontSize: 20 }}>{email}</Text>
                 <HorizontalLine></HorizontalLine>
                 <Text onPress={() => this.props.logout()} style={{ textAlign: 'left', marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}> Logout </Text>
                 <HorizontalLine></HorizontalLine>

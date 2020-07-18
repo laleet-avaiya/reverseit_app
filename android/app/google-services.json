@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "868755194876",
+    "firebase_url": "https://reverseit-65d8f.firebaseio.com",
+    "project_id": "reverseit-65d8f",
+    "storage_bucket": "reverseit-65d8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868755194876:android:878fae7b37aac79adbe879",
+        "android_client_info": {
+          "package_name": "com.reverseit_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868755194876-1mjsjh5k25hbjq910pcsi4ktr4dg1pqc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9ZS5jQhu8Kgj9DBg0lZrSyMiTvd-IMUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868755194876-1mjsjh5k25hbjq910pcsi4ktr4dg1pqc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

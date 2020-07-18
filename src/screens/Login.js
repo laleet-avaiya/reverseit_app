@@ -4,7 +4,7 @@ import { Button, Image, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
 
-
+import Firebase from '../Firebase'
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/user';
 
@@ -41,17 +41,15 @@ class Login extends Component {
   loginRequest = () => {
     let email = this.state.email;
     let password = this.state.password;
-    const loginURL = "https://reqres.in/api/users?id=2";
+    Firebase.auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((response) => {
+              let email = response.user.email;
+              this.props.login({email:email, password: "***"})
+            } )
+            .catch(error => console.log(error))
 
-    console.log("sent")
-    axios.get(loginURL)
-      .then((response) => {
-        if (response.status == 200) {
-          this.props.login(response.data)
-        }
-      }, (error) => {
-        console.log(error);
-      });
+         
   }
 
   render() {
@@ -91,7 +89,7 @@ class Login extends Component {
             visible={passwordError ? true : false}
             type="error">{passwordError}</Text>
 
-          <Text style={[styles.forgotPassword, {color:themeColor}]} >Forgot password?</Text>
+          <Text style={[styles.forgotPassword, { color: themeColor }]} >Forgot password?</Text>
 
           <Button
             onPress={() => this.loginRequest()}
