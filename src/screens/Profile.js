@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-nat
 import { Button, Image, Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 
+import HorizontalLine from '../shared/HorizontalLine'
 
 import { logoutUser } from '../actions/user';
 
@@ -24,7 +25,7 @@ class Profile extends Component {
                     </View>
                     
                 </View>
-                <View style={styles.lineStyle} />
+                <HorizontalLine></HorizontalLine>
                 <Text onPress={() => this.props.logout()} style={{ textAlign: 'left', marginLeft: 10,  fontSize: 15, fontWeight: 'bold' }}> Logout </Text>
                 <View style={styles.lineStyle} />
             </View>
@@ -54,11 +55,6 @@ const styles = StyleSheet.create({
         margin: 5,
         fontSize: 14,
         fontWeight: '700'
-    },
-    lineStyle: {
-        borderWidth: 0.5,
-        borderColor: 'black',
-        margin: 10,
     }
 });
 
