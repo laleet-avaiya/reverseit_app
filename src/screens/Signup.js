@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput } from 'react-native';
+import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 
-import { signupUser } from '../actions/user';
+import { loginUser } from '../actions/user';
 
 import Firebase from '../Firebase'
 
@@ -17,7 +17,9 @@ class Signup extends Component {
       passwordError: false,
       password: '',
       secure: true,
-      icon: 'Show'
+      icon: 'Show',
+      error: false,
+      errorMessage: '',
     };
   }
 
@@ -41,16 +43,31 @@ class Signup extends Component {
     const { email, password } = this.state
     Firebase.auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(() => console.log("hi"))
-        .catch(error => console.log(error))
+        .then((response) => {
+          console.log(response.user)
+          this.props.login(response.user)
+        })
+        .catch(error => {
+          this.setState({ error: true, errorMessage: JSON.stringify(error) })
+          setTimeout(() => { this.setState({error : false, errorMessage: ''}),2000})
+        })
 }
 
   render() {
     let { title,themeColor } = this.props;
-    let { emailError, email, password, passwordError, HelperText, secure, icon } = this.state;
+    let { emailError, email, password, passwordError, HelperText, secure, icon, error, errorMessage } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.mainContainer}>
+
+        {error && ToastAndroid.showWithGravityAndOffset(
+            JSON.parse(errorMessage).message,
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+          )}
+
           <Text style={styles.labelStyle}>Email</Text>
           <View style={styles.emailSection}>
             <TextInput

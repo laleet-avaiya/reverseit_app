@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import axios from 'axios';
 
 import Firebase from '../Firebase'
 import { connect } from 'react-redux';
