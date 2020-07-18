@@ -30,8 +30,8 @@ class App extends Component {
             </>
           ) : (
               <>
-                {/* <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} /> */}
-                <Stack.Screen name="AuthTab" component={PhoneAuth} options={{ title: 'Welcome', }} />
+                <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
+                {/* <Stack.Screen name="AuthTab" component={PhoneAuth} options={{ title: 'Welcome', }} /> */}
               </>
             )}
         </Stack.Navigator>

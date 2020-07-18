@@ -8,12 +8,19 @@ import { logoutUser } from '../actions/user';
 
 class Profile extends Component {
     render() {
-        let { email } = this.props;
+        let { avatar, email, first_name, last_name } = this.props.user;
         return (
             <View>
-                <Text style={{ textAlign: 'center' }}>
-                    Welcome to Profile Page {email}
-                </Text>
+                <Text style={{ textAlign: 'center' }}>Welcome</Text>
+                <Image
+                    source={{uri: avatar}}
+                    resizeMode='stretch'
+                    style={{ width: 100, height: 100, borderRadius: 50 }}
+                    containerStyle={{ alignSelf: 'center'}}
+                />
+                <Text>{first_name + " "+ last_name}</Text>
+                <Text>{email}</Text>
+                
                 <Button
                     onPress={() => this.props.logout()}
                     containerStyle={styles.button}
@@ -55,7 +62,7 @@ const mapStateToProps = (state) => {
     return {
         title: state.postReducer.title,
         userLogedIn: state.userReducer.userLogedIn,
-        email: state.userReducer.user.email,
+        user: state.userReducer.user,
     }
 }
 

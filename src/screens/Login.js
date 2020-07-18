@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { connect } from 'react-redux';
+import axios from 'axios';
 
+
+import { connect } from 'react-redux';
 import { loginUser } from '../actions/user';
 
 class Login extends Component {
@@ -34,6 +36,22 @@ class Login extends Component {
     } else {
       this.setState({ icon: "Show", secure: true })
     }
+  }
+
+  loginRequest = () => {
+    let email = this.state.email;
+    let password = this.state.password;
+    const loginURL = "https://reqres.in/api/users?id=2";
+
+    console.log("sent")
+    axios.get(loginURL)
+      .then((response) => {
+        if (response.status == 200) {
+          this.props.login(response.data)
+        }
+      }, (error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -76,7 +94,7 @@ class Login extends Component {
           <Text style={styles.forgotPassword} >Forgot password?</Text>
 
           <Button
-            onPress={() => this.props.login({ email: email, password: password })}
+            onPress={() => this.loginRequest()}
             buttonStyle={{ backgroundColor: themeColor }}
             containerStyle={styles.button}
             titleStyle={styles.buttonText}
