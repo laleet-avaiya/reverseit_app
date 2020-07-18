@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput } from 'react-native';
+import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import axios from 'axios';
@@ -18,6 +18,8 @@ class Login extends Component {
       passwordError: false,
       password: '',
       secure: true,
+      error: false,
+      errorMessage: '',
       icon: 'Show'
     };
   }
@@ -42,19 +44,20 @@ class Login extends Component {
     let email = this.state.email;
     let password = this.state.password;
     Firebase.auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((response) => {
-              let email = response.user.email;
-              this.props.login({email:email, password: "***"})
-            } )
-            .catch(error => console.log(error))
-
-         
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        this.props.login(response.user)
+      })
+      .catch(error => {
+        this.setState({ error: true, errorMessage: JSON.stringify(error) })
+        setTimeout(() => { this.setState({error : false, errorMessage: ''}),2000})
+      })
   }
 
   render() {
+
     let { title, themeColor } = this.props;
-    let { emailError, email, password, passwordError, HelperText, secure, icon } = this.state;
+    let { emailError, email, password, passwordError, HelperText, secure, icon, errorMessage, error } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.mainContainer}>
@@ -68,6 +71,14 @@ class Login extends Component {
               keyboardType="email-address"
               onChangeText={text => this.setEmail(text)} />
           </View>
+
+          {error && ToastAndroid.showWithGravityAndOffset(
+            JSON.parse(errorMessage).message,
+            ToastAndroid.LONG,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+          )}
 
           <Text
             visible={emailError ? true : false}
