@@ -13,6 +13,8 @@ import { logoutUser } from '../actions/user';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -21,14 +23,16 @@ const Tab = createBottomTabNavigator();
 
 class BottomNavigator extends Component {
     render() {
+        let {themeColor} = this.props
         return (
             <Tab.Navigator
                 initialRouteName="DashBoard"
                 tabBarOptions={{
-                    activeTintColor: '#23b4fc',
+                    activeTintColor: themeColor,
                     labelStyle: {
                         display: 'none'
-                    }
+                    },
+                    swipeEnabled: true,
                 }}
             >
                 <Tab.Screen
@@ -111,7 +115,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn
+        userLogedIn: state.userReducer.userLogedIn,
+        themeColor: state.userReducer.themeColor
     }
 }
 

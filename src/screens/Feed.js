@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
-import { Button, Image, Text, Card, SearchBar } from 'react-native-elements';
+import { Button, Image, Text, Card, SearchBar, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 
@@ -20,16 +20,20 @@ class Feed extends Component {
     };
 
     render() {
-        let { postList, title } = this.props;
+        let { postList, title, themeColor } = this.props;
         let { search } = this.state;
 
         return (
             <View style={styles.container}>
-                <SearchBar
-                    placeholder="Type Here..."
-                    onChangeText={this.updateSearch}
-                    value={search}
-                />
+                <Header
+                    statusBarProps={{ barStyle: 'light-content' }}
+                    barStyle="light-content" // or directly
+                    leftComponent={{ text: 'Search ... ', style: { color: '#fff', width: 500, fontWeight: 'bold', fontSize: 16, } }}
+                    containerStyle={{
+                        backgroundColor: themeColor,
+                        justifyContent: 'space-around',
+                    }}>
+                </Header>
                 <ScrollView >
                     {postList.map((post) => {
                         return (
@@ -80,7 +84,8 @@ const mapStateToProps = (state) => {
     return {
         postList: state.postReducer.postList,
         title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn
+        userLogedIn: state.userReducer.userLogedIn,
+        themeColor: state.userReducer.themeColor
     }
 }
 

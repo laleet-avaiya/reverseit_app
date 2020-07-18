@@ -91,7 +91,7 @@ class Login extends Component {
             visible={passwordError ? true : false}
             type="error">{passwordError}</Text>
 
-          <Text style={styles.forgotPassword} >Forgot password?</Text>
+          <Text style={[styles.forgotPassword, {color:themeColor}]} >Forgot password?</Text>
 
           <Button
             onPress={() => this.loginRequest()}
@@ -147,7 +147,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: '10%',
     fontSize: 16,
-    color: '#23b4fc',
     fontWeight: 'bold'
 
   },

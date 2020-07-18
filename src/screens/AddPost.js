@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput } from 'react-native';
-import { Button, Image, Text, } from 'react-native-elements';
+import { Button, Image, Text, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 
@@ -42,7 +42,16 @@ class AddPost extends Component {
         let { themeColor } = this.props;
         return (
             <View style={{ flex: 1 }}>
-                <View style={styles.mainContainer}>
+                <Header
+                    statusBarProps={{ barStyle: 'light-content' }}
+                    barStyle="light-content" // or directly
+                    leftComponent={{ text: 'Post Your Needs', style: { color: '#fff', width: 500, fontWeight: 'bold', fontSize: 16, } }}
+                    containerStyle={{
+                        backgroundColor: themeColor,
+                        justifyContent: 'space-around',
+                    }}
+                />
+                <View style={[styles.mainContainer, { paddingTop: 20 }]}>
                     <Text style={[styles.labelStyle]}>Title</Text>
                     <View style={styles.titleSection}>
                         <TextInput

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
+import { Button, Image, Text, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 
 
@@ -8,8 +8,17 @@ import { logoutUser } from '../actions/user';
 
 class Chat extends Component {
     render() {
+        let {themeColor} = this.props;
         return (
             <View>
+                <Header
+                    statusBarProps={{ barStyle: 'light-content' }}
+                    barStyle="light-content" // or directly
+                    leftComponent={{ text: 'Messages', style: { color: '#fff', width: 500, fontWeight: 'bold', fontSize: 16, } }}
+                    containerStyle={{
+                        backgroundColor: themeColor,
+                        justifyContent: 'space-around',
+                    }}></Header>
                 <Text style={{ textAlign: 'center' }}>
                     Welcome to Chat Page
                 </Text>
@@ -46,7 +55,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn
+        userLogedIn: state.userReducer.userLogedIn,
+        themeColor: state.userReducer.themeColor
     }
 }
 
