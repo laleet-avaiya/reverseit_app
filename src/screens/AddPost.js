@@ -7,6 +7,13 @@ import { connect } from 'react-redux';
 import { logoutUser } from '../actions/user';
 
 class AddPost extends Component {
+
+    componentDidMount = () => {
+        this.props.navigation.setParams({
+            options : { headerShown: false }
+        });
+    }
+
     render() {
         return (
             <View>

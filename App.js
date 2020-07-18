@@ -21,19 +21,13 @@ class App extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-
           {wait && <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome', headerShown: false }} />}
-
           {userLogedIn ? (
-            <>
-              <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Welcome', headerShown: true }} />
-            </>
+            <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Welcome', headerShown: false }} />
           ) : (
-              <>
-                <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
-                {/* <Stack.Screen name="AuthTab" component={PhoneAuth} options={{ title: 'Welcome', }} /> */}
-              </>
-            )}
+              <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
+            )
+          }
         </Stack.Navigator>
       </NavigationContainer>
     );

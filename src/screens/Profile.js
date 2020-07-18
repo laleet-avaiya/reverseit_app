@@ -11,23 +11,22 @@ class Profile extends Component {
         let { avatar, email, first_name, last_name } = this.props.user;
         return (
             <View>
-                <Text style={{ textAlign: 'center' }}>Welcome</Text>
-                <Image
-                    source={{uri: avatar}}
-                    resizeMode='stretch'
-                    style={{ width: 100, height: 100, borderRadius: 50 }}
-                    containerStyle={{ alignSelf: 'center'}}
-                />
-                <Text>{first_name + " "+ last_name}</Text>
-                <Text>{email}</Text>
-                
-                <Button
-                    onPress={() => this.props.logout()}
-                    containerStyle={styles.button}
-                    titleStyle={styles.buttonText}
-                    type="clear"
-                    title="Logout"
-                />
+                <View style={{ flexDirection: 'row' }}>
+                    <Image
+                        source={{ uri: avatar }}
+                        resizeMode='stretch'
+                        style={{ width: 75, height: 75, borderRadius: 50 }}
+                        containerStyle={{ margin: 10 }}
+                    />
+                    <View style={{margin:20}}>
+                    <Text style={{fontSize:20}}>{first_name + " " + last_name}</Text>
+                    <Text style={{fontSize:20}}>{email}</Text>
+                    </View>
+                    
+                </View>
+                <View style={styles.lineStyle} />
+                <Text onPress={() => this.props.logout()} style={{ textAlign: 'left', marginLeft: 10,  fontSize: 15, fontWeight: 'bold' }}> Logout </Text>
+                <View style={styles.lineStyle} />
             </View>
         );
     }
@@ -56,6 +55,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '700'
     },
+    lineStyle: {
+        borderWidth: 0.5,
+        borderColor: 'black',
+        margin: 10,
+    }
 });
 
 const mapStateToProps = (state) => {
