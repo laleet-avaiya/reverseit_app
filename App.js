@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 
 import AuthTab from './src/screens/AuthTab';
-import PhoneAuth from './src/screens/PhoneAuth';
+import ForgotPassword from './src/screens/ForgotPassword';
 import BottomNavigator from './src/screens/BottomNavigator';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,11 +21,14 @@ class App extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          {wait && <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome', headerShown: false }} />}
+          {!wait && <Stack.Screen name="Welcome" component={Home} options={{ title: 'Welcome', headerShown: false }} />}
           {userLogedIn ? (
             <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ title: 'Welcome', headerShown: false }} />
           ) : (
-              <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
+              <>
+                <Stack.Screen name="AuthTab" component={AuthTab} options={{ title: 'Welcome', }} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: 'Reset Password', }} />
+              </>
             )
           }
         </Stack.Navigator>

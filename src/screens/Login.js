@@ -49,13 +49,13 @@ class Login extends Component {
       })
       .catch(error => {
         this.setState({ error: true, errorMessage: JSON.stringify(error) })
-        setTimeout(() => { this.setState({error : false, errorMessage: ''}),2000})
+        setTimeout(() => { this.setState({ error: false, errorMessage: '' }), 2000 })
       })
   }
 
   render() {
 
-    let { title, themeColor } = this.props;
+    let { title, themeColor, navigation } = this.props;
     let { emailError, email, password, passwordError, HelperText, secure, icon, errorMessage, error } = this.state;
     return (
       <View style={{ flex: 1 }}>
@@ -99,7 +99,10 @@ class Login extends Component {
             visible={passwordError ? true : false}
             type="error">{passwordError}</Text>
 
-          <Text style={[styles.forgotPassword, { color: themeColor }]} >Forgot password?</Text>
+          <Text
+            style={[styles.forgotPassword, { color: themeColor }]}
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >Forgot password?</Text>
 
           <Button
             onPress={() => this.loginRequest()}
