@@ -1,14 +1,7 @@
-import { ADD_POST, DELETE_POST } from '../actions/actionTypes'
+import { ADD_POST, DELETE_POST, SET_POST } from '../actions/actionTypes'
 
 const initialState = {
-    postList: [
-        {
-            id: 1,
-            title: "Looking for Used Lenovo Z500 Charger Original.",
-            description: "Looking for Used Lenovo Z500 Charger Original, Only adapter is also fine.",
-            postOn: Date().toLocaleString()
-        }
-    ],
+    postList: [],
     title: 'Welcome to ReverseIt'
 }
 
@@ -18,6 +11,12 @@ const postReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postList: state.postList.concat(action.post)
+            };
+
+        case SET_POST:
+            return {
+                ...state,
+                postList: action.post
             };
         case DELETE_POST:
             return {

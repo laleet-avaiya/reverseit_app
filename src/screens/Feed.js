@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { Button, Image, Text, Card, SearchBar, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
+import Firebase from '../Firebase'
+import { setPost } from '../actions/post';
 
 
 import { logoutUser } from '../actions/user';
@@ -12,6 +14,7 @@ class Feed extends Component {
         super(props);
         this.state = {
             search: '',
+            loading: false
         };
     }
 
@@ -19,9 +22,29 @@ class Feed extends Component {
         this.setState({ search });
     };
 
+    componentDidMount = () => {
+        // data = []
+        // Firebase.firestore()
+        //     .collection('Posts')
+        //     .onSnapshot((QuerySnapshot) => {
+        //         const docSnapshots = QuerySnapshot.docs;
+        //         // console.log("update comes")
+        //         for (var i in docSnapshots) {
+        //             // console.log(i)
+        //             const doc = docSnapshots[i].data();
+        //             data.push(doc)
+        //         }
+        //         // console.log(data)
+        //         this.props.setPost(data)
+        //     }, (error) => {
+        //         console.error(error);
+        //     });
+    }
+
+
     render() {
         let { postList, title, themeColor } = this.props;
-        let { search } = this.state;
+        let { search, loading } = this.state;
 
         return (
             <View style={styles.container}>
@@ -91,7 +114,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logout: () => dispatch(logoutUser())
+        setPost: (post) => dispatch(setPost(post))
     }
 }
 

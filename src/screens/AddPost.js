@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput } from 'react-native';
+import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
+import uuid from 'react-native-uuid';
 
-
+import Firebase from '../Firebase'
 import { logoutUser } from '../actions/user';
 import { addPost } from '../actions/post';
 
@@ -27,14 +28,40 @@ class AddPost extends Component {
 
     addPost = () => {
 
+        const id = uuid.v4()
         let post = {
-            id: Math.random(),
+            id: id,
             title: this.state.title,
             description: this.state.description,
+            attachment: "url",
             postOn: Date().toLocaleString()
         }
-        this.props.addPost(post)
+
+        Firebase.firestore()
+            .collection('Posts')
+            .doc(id)
+            .set(post)
+            .then(() => {
+                ToastAndroid.showWithGravityAndOffset(
+                    "Posts added!",
+                    ToastAndroid.LONG,
+                    ToastAndroid.BOTTOM,
+                    25,
+                    50
+                )
+            }).catch(() => {
+                ToastAndroid.showWithGravityAndOffset(
+                    "Try again!",
+                    ToastAndroid.LONG,
+                    ToastAndroid.BOTTOM,
+                    25,
+                    50
+                )
+            })
+        // this.props.addPost(post)
+
     }
+
     componentDidMount = () => { }
 
     render() {

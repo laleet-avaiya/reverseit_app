@@ -1,5 +1,6 @@
 export const ADD_POST = 'ADD_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const SET_POST = 'SET_POST'
 
 export const USER_LOGIN = 'USER_LOGIN'
 export const USER_SIGNUP = 'USER_SIGNUP'

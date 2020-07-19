@@ -13,9 +13,9 @@ class Login extends Component {
     super(props);
     this.state = {
       emailError: false,
-      email: '',
+      email: 'lmavaiya@gmail.com',
       passwordError: false,
-      password: '',
+      password: '123456',
       secure: true,
       error: false,
       errorMessage: '',
@@ -48,8 +48,13 @@ class Login extends Component {
         this.props.login(response.user)
       })
       .catch(error => {
-        this.setState({ error: true, errorMessage: JSON.stringify(error) })
-        setTimeout(() => { this.setState({ error: false, errorMessage: '' }), 2000 })
+        ToastAndroid.showWithGravityAndOffset(
+          JSON.parse(JSON.stringify(error)).message,
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        )
       })
   }
 
@@ -70,14 +75,6 @@ class Login extends Component {
               keyboardType="email-address"
               onChangeText={text => this.setEmail(text)} />
           </View>
-
-          {error && ToastAndroid.showWithGravityAndOffset(
-            JSON.parse(errorMessage).message,
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-          )}
 
           <Text
             visible={emailError ? true : false}
