@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
+import auth from '@react-native-firebase/auth';
+
 import { connect } from 'react-redux';
 
 import { loginUser } from '../actions/user';
 
-import Firebase from '../Firebase'
+// import Firebase from '../Firebase'
 
 class Signup extends Component {
 
@@ -41,33 +43,40 @@ class Signup extends Component {
 
   handleSignUp = () => {
     const { email, password } = this.state
-    Firebase.auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then((response) => {
-          console.log(response.user)
-          this.props.login(response.user)
-        })
-        .catch(error => {
-          this.setState({ error: true, errorMessage: JSON.stringify(error) })
-          setTimeout(() => { this.setState({error : false, errorMessage: ''}),2000})
-        })
-}
+    if(email === "" || password === ""){
+      ToastAndroid.showWithGravityAndOffset(
+        "Email and Password Require.",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+      )
+      return;
+    }
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        console.log(response.user)
+        this.props.login(response.user)
+      })
+      .catch(error => {
+        message = error.code;
+        ToastAndroid.showWithGravityAndOffset(
+          error.code,
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        )
+      });
+  }
 
   render() {
-    let { title,themeColor } = this.props;
+    let { title, themeColor } = this.props;
     let { emailError, email, password, passwordError, HelperText, secure, icon, error, errorMessage } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.mainContainer}>
-
-        {error && ToastAndroid.showWithGravityAndOffset(
-            JSON.parse(errorMessage).message,
-            ToastAndroid.LONG,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-          )}
-
           <Text style={styles.labelStyle}>Email</Text>
           <View style={styles.emailSection}>
             <TextInput
@@ -101,7 +110,7 @@ class Signup extends Component {
 
           <Button
             onPress={this.handleSignUp}
-            buttonStyle={{backgroundColor:themeColor}}
+            buttonStyle={{ backgroundColor: themeColor }}
             containerStyle={styles.button}
             titleStyle={styles.buttonText}
             // type="clear"
@@ -209,7 +218,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     title: state.postReducer.title,
-    themeColor : state.userReducer.themeColor,
+    themeColor: state.userReducer.themeColor,
   }
 }
 

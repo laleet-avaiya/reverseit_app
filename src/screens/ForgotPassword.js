@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 
-import Firebase from '../Firebase'
+// import Firebase from '../Firebase'
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/user';
 

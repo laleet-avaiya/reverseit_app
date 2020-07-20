@@ -11,8 +11,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { connect } from 'react-redux';
 import { deletePost } from './src/actions/post';
 import Home from './src/screens/Home';
-import { Buffer } from 'buffer';
-global.Buffer = Buffer; // very important
+// import { Buffer } from 'buffer';
+// global.Buffer = Buffer; // very important
 
 
 const Stack = createStackNavigator();

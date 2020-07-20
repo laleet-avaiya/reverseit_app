@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import HorizontalLine from '../shared/HorizontalLine'
 
 import { logoutUser } from '../actions/user';
+import auth from '@react-native-firebase/auth';
 
 
 const user = {
@@ -37,6 +38,15 @@ const user = {
 
 
 class Profile extends Component {
+
+    logoutUser = () => {
+        auth()
+            .signOut()
+            .then(() => console.log('User signed out!'));
+
+        this.props.logout()
+    }
+
     render() {
         let { uid, email, phoneNumber, displayName } = this.props.user;
         let { themeColor } = this.props;
@@ -54,7 +64,7 @@ class Profile extends Component {
                 <Text style={{ fontSize: 20 }}>{email}</Text>
                 <Text style={{ fontSize: 20 }}>{uid}</Text>
                 <HorizontalLine></HorizontalLine>
-                <Text onPress={() => this.props.logout()} style={{ textAlign: 'left', marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}> Logout </Text>
+                <Text onPress={() => this.logoutUser()} style={{ textAlign: 'left', marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}> Logout </Text>
                 <HorizontalLine></HorizontalLine>
             </View>
         );

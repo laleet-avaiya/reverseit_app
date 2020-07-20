@@ -3,7 +3,8 @@ import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, Toast
 import { Button, Image, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import Firebase from '../Firebase'
+// import Firebase from '../Firebase'
+import auth from '@react-native-firebase/auth';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/user';
 
@@ -42,20 +43,44 @@ class Login extends Component {
   loginRequest = () => {
     let email = this.state.email;
     let password = this.state.password;
-    Firebase.auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        this.props.login(response.user)
-      })
+    if (email === "" || password === "") {
+      ToastAndroid.showWithGravityAndOffset(
+        "Email and Password Require.",
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50
+      )
+      return;
+    }
+
+    auth().signInWithEmailAndPassword(email, password).then((response) => {
+      this.props.login(response.user)
+    })
       .catch(error => {
+        message = error.code;
         ToastAndroid.showWithGravityAndOffset(
-          JSON.parse(JSON.stringify(error)).message,
+          error.code,
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
           25,
           50
         )
       })
+    // Firebase.auth()
+    //   .signInWithEmailAndPassword(email, password)
+    //   .then((response) => {
+    //     this.props.login(response.user)
+    //   })
+    //   .catch(error => {
+    //     ToastAndroid.showWithGravityAndOffset(
+    //       JSON.parse(JSON.stringify(error)).message,
+    //       ToastAndroid.LONG,
+    //       ToastAndroid.BOTTOM,
+    //       25,
+    //       50
+    //     )
+    //   })
   }
 
   render() {

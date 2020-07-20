@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
-import uuid from 'react-native-uuid';
+import DocumentPicker from 'react-native-document-picker';
 
-import Firebase from '../Firebase'
+// import Firebase from '../Firebase'
 import { logoutUser } from '../actions/user';
 import { addPost } from '../actions/post';
 
@@ -14,7 +14,8 @@ class AddPost extends Component {
         super(props);
         this.state = {
             title: '',
-            description: ''
+            description: '',
+            docs: []
         };
     }
 
@@ -26,15 +27,35 @@ class AddPost extends Component {
         this.setState({ description: data })
     }
 
+    uploadFiles = async () => {
+        try {
+            const results = await DocumentPicker.pickMultiple({
+                type: [DocumentPicker.types.allFiles],
+            });
+            for (const res of results) {
+                this.state.docs.push( res.uri, res.type, res.name, res.size);
+            }
+        } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+                // User cancelled the picker, exit any dialogs or menus and move on
+                //   console.log(err)
+            } else {
+                throw err;
+            }
+        }
+    }
+
     addPost = () => {
 
-        const id = uuid.v4()
+        const id = Math.random()
+        const docs = this.state.docs
         let post = {
             id: id,
             title: this.state.title,
             description: this.state.description,
             attachment: "url",
-            postOn: Date().toLocaleString()
+            postOn: Date().toLocaleString(),
+            docs: docs
         }
 
         Firebase.firestore()
@@ -42,6 +63,7 @@ class AddPost extends Component {
             .doc(id)
             .set(post)
             .then(() => {
+                this.setState({ docs: [] })
                 ToastAndroid.showWithGravityAndOffset(
                     "Posts added!",
                     ToastAndroid.LONG,
@@ -104,7 +126,7 @@ class AddPost extends Component {
                             onChangeText={text => this.setDescription(text)} />
                     </View>
 
-
+                    <Text onPress={this.uploadFiles}> Upload Fils</Text>
                     <Button
                         onPress={this.addPost}
                         buttonStyle={{ backgroundColor: themeColor }}
