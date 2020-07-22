@@ -4,7 +4,22 @@ import { Button, Image, Text, Card, SearchBar, Header } from 'react-native-eleme
 import { connect } from 'react-redux';
 import { setPost } from '../actions/post';
 
+import firestore from '@react-native-firebase/firestore';
 
+function onResult(QuerySnapshot) {
+    console.log('Got Users collection result.' + QuerySnapshot.size);
+    QuerySnapshot.forEach(documentSnapshot => {
+        console.log('', documentSnapshot.id, documentSnapshot.data());
+    });
+}
+
+function onError(error) {
+    console.error(error);
+}
+
+firestore()
+    .collection('Posts')
+    .onSnapshot(onResult, onError);
 
 
 class Feed extends Component {
@@ -20,6 +35,18 @@ class Feed extends Component {
     updateSearch = (search) => {
         this.setState({ search });
     };
+
+    onResult = (QuerySnapshot) => {
+        console.log('Got Users collection result.' + QuerySnapshot.size);
+        QuerySnapshot.forEach(documentSnapshot => {
+            console.log('', documentSnapshot.id, documentSnapshot.data());
+        });
+    }
+    
+    onError = (error) => {
+        console.error(error);
+    }
+
 
     componentDidMount = () => {
         // data = []
