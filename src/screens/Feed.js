@@ -2,11 +2,10 @@ import React, { Component, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import { Button, Image, Text, Card, SearchBar, Header } from 'react-native-elements';
 import { connect } from 'react-redux';
-// import Firebase from '../Firebase'
 import { setPost } from '../actions/post';
 
 
-import { logoutUser } from '../actions/user';
+
 
 class Feed extends Component {
 

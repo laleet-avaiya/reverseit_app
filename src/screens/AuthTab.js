@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
+import { StyleSheet, } from 'react-native';
 import Login from './Login';
 import Signup from './Signup';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
 import { connect } from 'react-redux';
-import { logoutUser } from '../actions/user';
 
 const Tab = createMaterialTopTabNavigator();
-
 
 class AuthTab extends Component {
     render() {
@@ -23,20 +19,15 @@ class AuthTab extends Component {
 }
 
 const styles = StyleSheet.create({
-  
+
 });
 
 const mapStateToProps = (state) => {
-    return {
-        title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn
-    }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        logout: () => dispatch(logoutUser())
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthTab);

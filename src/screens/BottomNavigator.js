@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
+import { StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { connect } from 'react-redux';
 
 import Profile from './Profile'
 import DashBoard from './DashBoard';
@@ -8,22 +9,13 @@ import Feed from './Feed';
 import AddPost from './AddPost';
 import Chat from './Chat';
 
-import { connect } from 'react-redux';
-import { logoutUser } from '../actions/user';
-
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 
 const Tab = createBottomTabNavigator();
 
-
 class BottomNavigator extends Component {
     render() {
-        let {themeColor} = this.props
+        let { themeColor } = this.props
         return (
             <Tab.Navigator
                 initialRouteName="DashBoard"
@@ -92,38 +84,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
     },
-    imageContainer: {
-        marginTop: '10%',
-        marginHorizontal: '5%',
-    },
-    button: {
-        marginTop: 10,
-        marginHorizontal: '15%',
-        backgroundColor: 'white',
-        borderRadius: 15,
-        borderColor: 'green',
-        borderWidth: 1
-    },
-    buttonText: {
-        color: 'green',
-        margin: 5,
-        fontSize: 14,
-        fontWeight: '700'
-    },
 });
 
 const mapStateToProps = (state) => {
-    return {
-        title: state.postReducer.title,
-        userLogedIn: state.userReducer.userLogedIn,
-        themeColor: state.userReducer.themeColor
-    }
+    return {}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        logout: () => dispatch(logoutUser())
-    }
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomNavigator);

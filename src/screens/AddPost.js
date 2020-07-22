@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import DocumentPicker from 'react-native-document-picker';
 
 import { connect } from 'react-redux';
-import { logoutUser } from '../actions/user';
 import { addPost } from '../actions/post';
 
 import firestore from '@react-native-firebase/firestore';
@@ -144,7 +143,7 @@ class AddPost extends Component {
                         </View>
 
                         <Button
-                            title={[<Icon name="paperclip" color={"white"} size={16} /> , "  Attachments"]}
+                            title={"Add  Attachments"}
                             titleStyle={{fontSize:12}}
                             buttonStyle={{ backgroundColor: "grey" }}
                             containerStyle={styles.button}
