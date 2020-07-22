@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 import { loginUser } from '../actions/user';
 
-// import Firebase from '../Firebase'
 
 class Signup extends Component {
 
@@ -43,7 +42,8 @@ class Signup extends Component {
 
   handleSignUp = () => {
     const { email, password } = this.state
-    if(email === "" || password === ""){
+
+    if (email === "" || password === "") {
       ToastAndroid.showWithGravityAndOffset(
         "Email and Password Require.",
         ToastAndroid.LONG,
@@ -53,16 +53,16 @@ class Signup extends Component {
       )
       return;
     }
+
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        console.log(response.user)
         this.props.login(response.user)
       })
       .catch(error => {
         message = error.code;
         ToastAndroid.showWithGravityAndOffset(
-          error.code,
+          message,
           ToastAndroid.LONG,
           ToastAndroid.BOTTOM,
           25,

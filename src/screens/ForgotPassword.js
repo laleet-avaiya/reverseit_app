@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
+import { View, StyleSheet, TextInput, ToastAndroid } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 
-// import Firebase from '../Firebase'
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/user';
+
+import auth from '@react-native-firebase/auth';
 
 class ForgotPassword extends Component {
     constructor(props) {
@@ -25,9 +26,21 @@ class ForgotPassword extends Component {
         this.setState({ email: data })
     }
 
-    loginRequest = () => {
+    resetRequest = () => {
         let email = this.state.email;
-        Firebase.auth().sendPasswordResetEmail(email).then(() => {
+
+        if (email === "") {
+            ToastAndroid.showWithGravityAndOffset(
+                "Enter your email Address.",
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50
+            )
+            return;
+        }
+
+        auth().sendPasswordResetEmail(email).then(() => {
             ToastAndroid.showWithGravityAndOffset(
                 "Password reset link sent.",
                 ToastAndroid.LONG,
@@ -37,8 +50,9 @@ class ForgotPassword extends Component {
             )
             this.setState({ email: '' });
         }).catch(error => {
+            message = error.code;
             ToastAndroid.showWithGravityAndOffset(
-                JSON.parse(JSON.stringify(error)).message,
+                message,
                 ToastAndroid.LONG,
                 ToastAndroid.BOTTOM,
                 25,
@@ -50,9 +64,8 @@ class ForgotPassword extends Component {
 
     render() {
         let { title, themeColor } = this.props;
-        let { emailError, email, errorMessage, error } = this.state;
+        let { emailError, email} = this.state;
         return (
-
             <View style={styles.mainContainer}>
                 <Text style={styles.labelStyle}>Email</Text>
                 <View style={styles.emailSection}>
@@ -65,7 +78,7 @@ class ForgotPassword extends Component {
                         onChangeText={text => this.setEmail(text)} />
                 </View>
                 <Button
-                    onPress={() => this.loginRequest()}
+                    onPress={() => this.resetRequest()}
                     buttonStyle={{ backgroundColor: themeColor }}
                     containerStyle={styles.button}
                     titleStyle={styles.buttonText}
@@ -78,11 +91,6 @@ class ForgotPassword extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
     button: {
         marginTop: '10%',
         marginHorizontal: '5%',
@@ -152,9 +160,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        login: (user) => dispatch(loginUser(user)),
-    }
+    return {}
 }
 
 

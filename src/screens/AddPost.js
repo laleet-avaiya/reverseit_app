@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, SafeAreaView, StatusBar, TextInput, ToastAndroid } from 'react-native';
 import { Button, Image, Text, Header } from 'react-native-elements';
-import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import DocumentPicker from 'react-native-document-picker';
 
-// import Firebase from '../Firebase'
+import { connect } from 'react-redux';
 import { logoutUser } from '../actions/user';
 import { addPost } from '../actions/post';
+
+import firestore from '@react-native-firebase/firestore';
+
 
 class AddPost extends Component {
 
@@ -15,6 +18,7 @@ class AddPost extends Component {
         this.state = {
             title: '',
             description: '',
+            location: '',
             docs: []
         };
     }
@@ -33,7 +37,7 @@ class AddPost extends Component {
                 type: [DocumentPicker.types.allFiles],
             });
             for (const res of results) {
-                this.state.docs.push( res.uri, res.type, res.name, res.size);
+                this.state.docs.push(res.uri, res.type, res.name, res.size);
             }
         } catch (err) {
             if (DocumentPicker.isCancel(err)) {
@@ -46,24 +50,20 @@ class AddPost extends Component {
     }
 
     addPost = () => {
-
-        const id = Math.random()
-        const docs = this.state.docs
         let post = {
-            id: id,
             title: this.state.title,
+            location: this.state.location,
             description: this.state.description,
-            attachment: "url",
             postOn: Date().toLocaleString(),
-            docs: docs
+            docs: this.state.docs
         }
 
-        Firebase.firestore()
+        firestore()
             .collection('Posts')
-            .doc(id)
-            .set(post)
-            .then(() => {
-                this.setState({ docs: [] })
+            .add(post)
+            .then((response) => {
+                postId = response._documentPath._parts[1]
+                this.setState({ title: '', location: '', description: '', docs: [] })
                 ToastAndroid.showWithGravityAndOffset(
                     "Posts added!",
                     ToastAndroid.LONG,
@@ -80,14 +80,16 @@ class AddPost extends Component {
                     50
                 )
             })
-        // this.props.addPost(post)
+    }
 
+    setLocation = (data) => {
+        this.setState({ location: data })
     }
 
     componentDidMount = () => { }
 
     render() {
-        let { title, description } = this.state;
+        let { title, description, location } = this.state;
         let { themeColor } = this.props;
         return (
             <View style={{ flex: 1 }}>
@@ -100,44 +102,67 @@ class AddPost extends Component {
                         justifyContent: 'space-around',
                     }}
                 />
-                <View style={[styles.mainContainer, { paddingTop: 20 }]}>
-                    <Text style={[styles.labelStyle]}>Title</Text>
-                    <View style={styles.titleSection}>
-                        <TextInput
-                            style={[styles.titleInputLayout, styles.normalBorder]}
-                            value={title}
-                            label="Title"
-                            autoCapitalize="sentences"
-                            keyboardType="default"
-                            onChangeText={text => this.setTitle(text)} />
+
+                <ScrollView>
+                    <View style={[styles.mainContainer, { paddingTop: 20 }]}>
+                        <Text style={[styles.labelStyle]}>Title</Text>
+                        <View style={styles.titleSection}>
+                            <TextInput
+                                style={[styles.titleInputLayout, styles.normalBorder]}
+                                value={title}
+                                label="Title"
+                                autoCapitalize="sentences"
+                                placeholder="Title"
+                                keyboardType="default"
+                                onChangeText={text => this.setTitle(text)} />
+                        </View>
+
+                        <Text style={[styles.labelStyle]}>Location</Text>
+                        <View style={styles.titleSection}>
+                            <TextInput
+                                style={[styles.titleInputLayout, styles.normalBorder]}
+                                value={location}
+                                label="Location"
+                                placeholder="City, Country"
+                                autoCapitalize="sentences"
+                                keyboardType="default"
+                                onChangeText={text => this.setLocation(text)} />
+                        </View>
+
+                        <Text style={[styles.labelStyle]}>Description</Text>
+                        <View style={styles.titleSection}>
+                            <TextInput
+                                style={[styles.titleInputLayout, styles.normalBorder]}
+                                value={description}
+                                label="Description"
+                                keyboardType="default"
+                                autoCapitalize="sentences"
+                                multiline
+                                editable
+                                numberOfLines={10}
+                                onChangeText={text => this.setDescription(text)} />
+                        </View>
+
+                        <Button
+                            title={[<Icon name="paperclip" color={"white"} size={16} /> , "  Attachments"]}
+                            titleStyle={{fontSize:12}}
+                            buttonStyle={{ backgroundColor: "grey" }}
+                            containerStyle={styles.button}
+                            containerStyle={{ width: 120, margin:15 , alignSelf: 'flex-end'}}
+                            onPress={this.uploadFiles}
+                        > </Button>
+                        
+                        <Button
+                            onPress={this.addPost}
+                            buttonStyle={{ backgroundColor: themeColor }}
+                            containerStyle={styles.button}
+                            titleStyle={styles.buttonText}
+                            // type="clear"
+                            title="Post"
+                        />
+
                     </View>
-
-                    <Text style={[styles.labelStyle]}>Description</Text>
-                    <View style={styles.titleSection}>
-                        <TextInput
-                            style={[styles.titleInputLayout, styles.normalBorder]}
-                            value={description}
-                            label="Description"
-                            keyboardType="default"
-                            autoCapitalize="sentences"
-                            multiline
-                            editable
-                            numberOfLines={10}
-                            onChangeText={text => this.setDescription(text)} />
-                    </View>
-
-                    <Text onPress={this.uploadFiles}> Upload Fils</Text>
-                    <Button
-                        onPress={this.addPost}
-                        buttonStyle={{ backgroundColor: themeColor }}
-                        containerStyle={styles.button}
-                        titleStyle={styles.buttonText}
-                        // type="clear"
-                        title="Post"
-                    />
-
-                </View>
-
+                </ScrollView>
             </View>
         );
     }
@@ -152,7 +177,6 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     button: {
-        marginTop: '20%',
         marginHorizontal: '5%',
         backgroundColor: 'white',
     },

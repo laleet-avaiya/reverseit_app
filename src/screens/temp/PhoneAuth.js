@@ -4,7 +4,7 @@ import { Button, Image, Text } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
 
-import { loginUser } from '../actions/user';
+import { loginUser } from '../../actions/user';
 
 class PhoneAuth extends Component {
 
